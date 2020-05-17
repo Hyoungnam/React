@@ -5,13 +5,10 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import rootReducer from 'redux/reducers';
-// import myLogger from 'middlewares/myLogger';
-import logger from 'redux-logger';
 import  { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 
-//myLogger 실행 후 logger 실행
-// const store = createStore(rootReducer, applyMiddleware(myLogger, logger));
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger)));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
 ReactDOM.render(
   <React.StrictMode>

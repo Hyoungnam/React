@@ -30,8 +30,8 @@ export default function CounterContainer() {
   }), shallowEqual);
   const dispatch = useDispatch();
 
-  const onIncrease = () => dispatch(increase());
-  const onDecrease = () => dispatch(decrease());
+  const onIncrease = () => dispatch(increaseAsync());
+  const onDecrease = () => dispatch(decreaseAsync());
   const onSetDiff = (diff) => dispatch(setDiff(diff));
   return (
     <Counter
