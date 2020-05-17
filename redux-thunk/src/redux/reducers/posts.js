@@ -9,7 +9,7 @@ const GET_POST_ERROR = 'GET_POST_ERROR';
 
 export const getPosts = () => async (dispatch) => {
   //1. 요청이 시작됨
-  dispatch({ type: GET_POSTS })
+  dispatch({ type: GET_POSTS, keepData: true })
   //2. API를 호출
 
   //2-1 성공했을 때
@@ -31,7 +31,7 @@ export const getPosts = () => async (dispatch) => {
 
 export const getPost = (id) => async (dispatch) => {
   //1. 요청이 시작됨
-  dispatch({type: GET_POST})
+  dispatch({ type: GET_POST })
   
   //2. API를 호출
 
@@ -73,7 +73,7 @@ export default function posts(prev = initialState, next) {
         ...prev,
         posts: {
           loading: true,
-          data: null,
+          data: next.keepData ? prev.posts.data : null,
           error: null
         }
       };
@@ -130,3 +130,6 @@ export default function posts(prev = initialState, next) {
       return prev;
   }
 }
+
+//해야할 것 
+//2. CLEAR_POST 작성
