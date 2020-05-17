@@ -6,6 +6,7 @@ const GET_POSTS_ERROR = 'GET_POSTS_ERROR';
 const GET_POST = 'GET_POST';
 const GET_POST_SUCCESS = 'GET_POST_SUCCESS';
 const GET_POST_ERROR = 'GET_POST_ERROR';
+const CLEAR_POST = 'CLEAR_POST';
 
 export const getPosts = () => async (dispatch) => {
   //1. 요청이 시작됨
@@ -65,6 +66,7 @@ const initialState = {
     error: null
   }
 }
+export const clearPost = () => ({type: CLEAR_POST})
 
 export default function posts(prev = initialState, next) {
   switch (next.type) {
@@ -123,6 +125,16 @@ export default function posts(prev = initialState, next) {
           loading: false,
           data: null,
           error: next.error
+        }
+      }
+    }
+    case CLEAR_POST: {
+      return {
+        ...prev,
+        post: {
+          loading: false,
+          data: null,
+          error: null
         }
       }
     }

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch }from "react-redux";
-import { getPosts } from "redux/reducers/posts";
+import { getPosts, clearPost } from "redux/reducers/posts";
 import PostList from "presentationals/components/PostList";
 
 function PostListContainer () {
@@ -12,6 +12,9 @@ function PostListContainer () {
     //1. 사용성 개선 첫 번째 방법
     // if(data) return;
     dispatch(getPosts())
+    return () => {
+      dispatch(clearPost());
+    }
   }, [data, dispatch]);
   
   //2. 사용성 개선 개선 두 번째 방법 
