@@ -1,4 +1,6 @@
 import * as postsAPI from 'api/posts';
+import { call, put, takeEvery } from 'redux-saga/effects';
+import { act } from 'react-dom/test-utils';
 
 const GET_POSTS = 'GET_POSTS';
 const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS';
@@ -8,50 +10,53 @@ const GET_POST_SUCCESS = 'GET_POST_SUCCESS';
 const GET_POST_ERROR = 'GET_POST_ERROR';
 const CLEAR_POST = 'CLEAR_POST';
 
-export const getPosts = () => async (dispatch) => {
-  //1. 요청이 시작됨
-  dispatch({ type: GET_POSTS, keepData: true })
-  //2. API를 호출
+export const getPosts = () => ({ 
+  type: GET_POSTS,
+  keepData: true
+});
+export const getPost = (id) => ({
+  type: GET_POST,
+  payload: id,
+  meta: id
+});
 
-  //2-1 성공했을 때
+function * getPostsSaga() {
   try {
-    const posts = await postsAPI.getPosts();
-    dispatch({
-      type:GET_POSTS_SUCCESS,
-      posts
-    });
-  } 
-  //2-2 실패했을 때
-  catch (e) {
-    dispatch({
-      type:GET_POSTS_ERROR,
-      error: e
+    const posts = yield call(postsAPI.getPosts);
+    yield put({
+      type: GET_POSTS_SUCCESS,
+      payload: posts //밑 리듀서에서 next.posts => next.payload
+    })
+  } catch (e) {
+    yield put({
+      type: GET_POSTS_ERROR,
+      payload: e,
+      error: true
     })
   }
 }
 
-export const getPost = (id) => async (dispatch) => {
-  //1. 요청이 시작됨
-  dispatch({ type: GET_POST })
-  
-  //2. API를 호출
-
-  //2-1 성공했을 때
+function * getPostSaga(action) {
+  const id = action.payload;
   try {
-    const post = await postsAPI.getPostById(id);
-    
-    dispatch({
-      type:GET_POST_SUCCESS,
-      post
-    });
-  } 
-  //2-2 실패했을 때 
-  catch (e) {
-    dispatch({
-      type:GET_POST_ERROR,
-      error: e
+    const post = yield call(postsAPI.getPostById, id);
+    yield put({
+      type: GET_POST_SUCCESS,
+      payload: post
+    })
+  } catch (e) {
+    yield put({
+      type: GET_POST_ERROR,
+      payload: e,
+      error: true,
+      meta: id
     })
   }
+}
+
+export function * postsSaga() {
+  yield takeEvery(GET_POSTS, getPostsSaga)
+  yield takeEvery(GET_POST, getPostSaga)
 }
 
 const initialState = {
@@ -84,7 +89,7 @@ export default function posts(prev = initialState, next) {
         ...prev,
         posts: {
           loading: false,
-          data: next.posts,
+          data: next.payload,
           error: null
         }
       }
@@ -95,7 +100,7 @@ export default function posts(prev = initialState, next) {
         posts: {
           loading: false,
           data: null,
-          error: next.error
+          error: next.payload
         }
       }
     }
@@ -113,7 +118,7 @@ export default function posts(prev = initialState, next) {
         ...prev,
         post: {
           loading: false,
-          data: next.post,
+          data: next.payload,
           error: null
         }
       }
@@ -124,7 +129,7 @@ export default function posts(prev = initialState, next) {
         post: {
           loading: false,
           data: null,
-          error: next.error
+          error: next.payload
         }
       }
     }

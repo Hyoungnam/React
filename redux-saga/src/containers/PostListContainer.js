@@ -9,7 +9,7 @@ function PostListContainer () {
   )
   const dispatch = useDispatch();
   useEffect(() => {
-    //1. 사용성 개선 첫 번째 방법
+    // 1. 사용성 개선 첫 번째 방법
     // if(data) return;
     dispatch(getPosts())
     return () => {
