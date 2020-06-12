@@ -1,15 +1,15 @@
 import React from 'react'
 
-const ImmuCounter = ({ color, number, onIncrease, onDecrease }) => {
-//   const onChange = (e) => {
-//     onSetDiff(parseInt(e.target.value, 10));
-//   };
+const ImmuCounter = ({ color, number, onIncrease, onDecrease, onChangeColor }) => {
+  const onChange = (e) => {
+    onChangeColor(e.target.value);
+  };
   return (
     <div>
-      <h1>{number}</h1>
+      <h1>{color}</h1>
+      <div>{number}</div>
       <div>
-        {/* <input type="number" value={number} onChange={onChange} /> */}
-        <span>{number}</span>
+        <input type="text" value={color} onChange={onChange} />
         <button onClick={onIncrease}>+</button>
         <button onClick={onDecrease}>-</button>
         <br/>

@@ -1,22 +1,23 @@
 import React from "react";
 import ImmuCounter from 'presentationals/components/ImmuCounter';
 import { connect } from 'react-redux';
-import { increase, decrease, changeColor } from "redux/reducers/immuCounter";
+import immuCounter, { increase, decrease, changeColor } from "redux/reducers/immuCounter";
 
-function ImmuCounterContainer({number, color, onIncrease, onDecrease}) {
+function ImmuCounterContainer({number, color, onIncrease, onDecrease, onChangeColor}) {
   return (
     <ImmuCounter
       color={color}
       number={number}
       onIncrease={onIncrease}
       onDecrease={onDecrease}
+      onChangeColor={onChangeColor}
     />
   );
 }
 
-const mapStateToProps = (state) => ({
-    color: state.immuCounter.color,
-    number: state.immuCounter.number,
+const mapStateToProps = (reducer) => ({
+    color: reducer.immuCounter.get('color'),
+    number: reducer.immuCounter.get('number')
 }) 
 
 const mapDispatchToProps = (dispatch) => ({

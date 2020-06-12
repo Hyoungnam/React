@@ -16,7 +16,7 @@ const initialState = fromJS({
   export const decrease = () => ({ type: DECREASE });
     
   
-//   test
+//test
   export default function immuCounter(state = initialState, action) {
     switch (action.type) {
       case CHANGE_COLOR:
