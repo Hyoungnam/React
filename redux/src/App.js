@@ -4,13 +4,16 @@ import PostListPage from 'pages/PostListPage';
 import PostPage from 'pages/PostPage';
 import CounterPage from 'pages/CounterPage'
 import ImmuCounterPage from 'pages/ImmuCounterPage'
+import ReselectPage from 'pages/ReselectPage';
 function App() {
   return (
     <BrowserRouter>
-      <Route path="/" component={PostListPage} exact />
+     <ImmuCounterPage/>
+      {/* <Route path="/" component={PostListPage} exact />
       <Route path="/:id" component={PostPage}  />
       <Route path="/counter" component={CounterPage} exact />
-      <Route path="/immuCounter" component={ImmuCounterPage} exact />
+      <Route path="/immucounter" component={ImmuCounterPage} exact />
+      <Route path="/reselect" component={ReselectPage} exact /> */}
     </BrowserRouter>
   );
 }
