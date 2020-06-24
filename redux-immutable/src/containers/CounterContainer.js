@@ -1,14 +1,24 @@
 import React from "react";
-import Counter from 'components/Counter';
-import { Map, List } from 'immutable'
-import { connect } from 'react-redux';
-import { increase, decrease, setDiff } from "redux/reducers/counter";
+import Counter from "components/Counter";
+import { Map, List } from "immutable";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { increase, decrease, setDiff } from "redux/reducers/counterReducer";
+import {
+  makeSelectCountersFirstIndexNumber,
+  makeSelectCountersFirstIndexDiff,
+} from "redux/selectors";
 
-
-function CounterContainer({counters, number, diff, onIncrease, onDecrease, onSetDiff}) {
-  console.log("number: ", number);
-  console.log("diff: ", diff);
-  console.log("counters: ", counters);
+function CounterContainer({
+  state,
+  counter,
+  counters,
+  number,
+  diff,
+  onIncrease,
+  onDecrease,
+  onSetDiff,
+}) {
   return (
     // <>
     //     {counters.map(item=>
@@ -24,28 +34,34 @@ function CounterContainer({counters, number, diff, onIncrease, onDecrease, onSet
     />
   );
 }
+// const mapStateToProps = (state) => ({
+//   number: getCountersFirstIndexNumber(state),
+//   diff: getCountersFirstIndexDiff(state),
+// });
 
-const mapStateToProps = (reducers) => ({
+const mapStateToProps = createStructuredSelector({
+  number: makeSelectCountersFirstIndexNumber,
+  diff: makeSelectCountersFirstIndexDiff,
+});
 
-    counters: reducers.counter.get('counters'),
-    // number: reducers.counter.get('counters').get(0).get('number')
-    number: reducers.counter.getIn(['counters', 0 ,'number']),
-    diff: reducers.counter.getIn(['counters', 0 ,'diff'])
-    // number: reducer.counter.number,
-    // diff: reducer.counter.diff
-}) 
+// const mapStateToProps = (state) => ({
+//     // counters: state.counter.get('counters'),
+//     // number: state.counter.get('counters').get(0).get('number')
+//     number: state.counter.getIn(['counters', 0 ,'number']),
+//     diff: state.counter.getIn(['counters', 0 ,'diff']),
+//     counter: state.counter,
+//     state: state
+//     // number: state.counter.number,
+//     // diff: state.counter.diff
+// })
 
 const mapDispatchToProps = (dispatch) => ({
-    onIncrease: () => dispatch(increase()),
-    onDecrease: () => dispatch(decrease()),
-    onSetDiff: (diff) => dispatch(setDiff(diff))
-})
+  onIncrease: () => dispatch(increase()),
+  onDecrease: () => dispatch(decrease()),
+  onSetDiff: (diff) => dispatch(setDiff(diff)),
+});
 
 // const enhance = connect();
 // export default enhance(CounterContainer);
-const withConnect = connect(
- mapStateToProps, 
- mapDispatchToProps
-)
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 export default withConnect(CounterContainer);
-
