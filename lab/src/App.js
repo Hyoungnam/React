@@ -1,7 +1,8 @@
 import React from 'react';
-import PostWithData from 'hoc/Post';
-import Comments from 'hoc/Comments';
-import Immutable from 'immutableJS';
+import PostWithData from 'Hoc/Post';
+import Comments from 'Hoc/Comments';
+import Immutable from 'ImmutableJS';
+import RenderProps from 'RenderProps';
 
 function App() {
   return (
@@ -11,8 +12,9 @@ function App() {
       <br></br>
       <h1>CommentsWithData</h1>
       <Comments /> */}
-      <h1>Immutable</h1>
-      <Immutable />
+      {/* <h1>Immutable</h1> */}
+      {/* <Immutable /> */}
+      <RenderProps />
     </div>
   );
 }
