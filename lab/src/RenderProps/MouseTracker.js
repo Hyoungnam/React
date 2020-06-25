@@ -69,7 +69,7 @@ function withMouse(Component) {
 
 function Cat(props) {
   const mouse = props.mouse;
-  console.log("Cat Props: ", props);
+  console.log("Cat Props: ", props); //{one: 1, two: 2, mouse: {…}}
   return (
     <img
       src="/cat.jpg"
