@@ -8,8 +8,11 @@ const rootReducer = combineReducers({
   // you have to pass formReducer under 'form' key,
   // for custom keys look up the docs for 'getFormState'
   counter: counter,
-  //   form: formReducer
+  form: formReducer,
 });
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware()));
+export const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware())
+);
 
 export default rootReducer;
